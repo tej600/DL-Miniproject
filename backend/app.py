@@ -16,9 +16,11 @@ async def process_image(file: UploadFile = File(...)):
     npimg = np.frombuffer(contents, np.uint8)
     img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
 
+    if img is None:
+        return {"error": "Invalid image"}
+
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 🔥 Your logic (same as notebook)
     img[gray > 120] = [0, 255, 0]
 
     _, buffer = cv2.imencode(".jpg", img)
