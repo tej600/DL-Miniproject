@@ -11,7 +11,7 @@ async function upload() {
   formData.append("file", file);
 
   try {
-    const response = await fetch("https://YOUR_BACKEND_URL/process", {
+    const response = await fetch("https://dl-miniproject-5.onrender.com/process", {
       method: "POST",
       body: formData
     });
