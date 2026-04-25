@@ -1,26 +1,14 @@
-async function upload() {
-  const fileInput = document.getElementById("file");
-  const file = fileInput.files[0];
+// Replace simulation with API call
+const formData = new FormData();
+formData.append("image", file);
 
-  if (!file) {
-    alert("Please select an image");
-    return;
-  }
-
-  let formData = new FormData();
-  formData.append("file", file);
-
-  try {
-    const response = await fetch("https://dl-miniproject-5.onrender.com/process", {
-      method: "POST",
-      body: formData
-    });
-
-    const blob = await response.blob();
-    document.getElementById("output").src = URL.createObjectURL(blob);
-
-  } catch (error) {
-    console.error(error);
-    alert("Error processing image");
-  }
-}
+fetch("http://127.0.0.1:5000/upload", {
+  method: "POST",
+  body: formData
+})
+.then(response => response.blob())
+.then(data => {
+  const url = URL.createObjectURL(data);
+  document.getElementById('outputImg').src = url;
+  document.getElementById('downloadBtn').style.display = "inline-block";
+});
